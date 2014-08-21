@@ -37,25 +37,19 @@ public class ShotsParser {
     }
 
     public static Shots parseShots(JSONObject jsonObject, String category) {
-        Shots shots = null;
-
-        for (int i = 0; i < jsonObject.length(); i++) {
-            shots = Shots.getShots(jsonObject.optInt(KEY_SHOTS_ID));
-
-            if (shots == null) {
-                shots = new Shots();
-            }
-
-            shots.setCategory(category);
-            shots.setShotsId(jsonObject.optInt(KEY_SHOTS_ID));
-            shots.setTitle(jsonObject.optString(KEY_SHOTS_TITLE));
-            shots.setImageUrl(jsonObject.optString(KEY_SHOTS_IMAGE_URL));
-            shots.setImageTeaserUrl(jsonObject.optString(KEY_SHOTS_IMAGE_TEASER_URL));
-            shots.setLikesCount(jsonObject.optInt(KEY_SHOTS_LIKES_COUNT));
-
-            shots.setPlayerName(parsePlayer(jsonObject).optString(KEY_PLAYER_NAME));
+        Shots shots = Shots.getShots(jsonObject.optInt(KEY_SHOTS_ID));
+        if (shots == null) {
+            shots = new Shots();
         }
 
+        shots.setCategory(category);
+        shots.setShotsId(jsonObject.optInt(KEY_SHOTS_ID));
+        shots.setTitle(jsonObject.optString(KEY_SHOTS_TITLE));
+        shots.setImageUrl(jsonObject.optString(KEY_SHOTS_IMAGE_URL));
+        shots.setImageTeaserUrl(jsonObject.optString(KEY_SHOTS_IMAGE_TEASER_URL));
+        shots.setLikesCount(jsonObject.optInt(KEY_SHOTS_LIKES_COUNT));
+
+        shots.setPlayerName(parsePlayer(jsonObject).optString(KEY_PLAYER_NAME));
         shots.save();
 
         return shots;
