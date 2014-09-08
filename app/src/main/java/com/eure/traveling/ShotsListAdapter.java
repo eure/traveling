@@ -19,6 +19,14 @@ public class ShotsListAdapter extends BaseAdapter{
     private Context context;
     private List<Shots> shotsList;
 
+    private static class ViewHolder {
+        TextView title;
+        TextView playerName;
+        TextView likesCount;
+        NetworkImageView image;
+    }
+
+
     public ShotsListAdapter(Context context, List<Shots> shotsList){
         this.context = context;
         this.shotsList = shotsList;
@@ -42,22 +50,33 @@ public class ShotsListAdapter extends BaseAdapter{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        if(convertView == null){
+        ViewHolder holder;
+
+        if(view == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view  = inflater.inflate(R.layout.list_row, parent, false);
+
+            TextView title = (TextView)view.findViewById(R.id.title);
+            TextView playerName = (TextView)view.findViewById(R.id.player_name);
+            TextView likesCount = (TextView)view.findViewById(R.id.likes_count);
+            NetworkImageView image = (NetworkImageView)view.findViewById(R.id.image);
+
+            holder = new ViewHolder();
+            holder.title = title;
+            holder.playerName = playerName;
+            holder.likesCount = likesCount;
+            holder.image = image;
+            view.setTag(holder);
+        }else{
+            holder = (ViewHolder)view.getTag();
         }
 
-        TextView title = (TextView)view.findViewById(R.id.title);
-        TextView playerName = (TextView)view.findViewById(R.id.player_name);
-        TextView likesCount = (TextView)view.findViewById(R.id.likes_count);
-        NetworkImageView image = (NetworkImageView)view.findViewById(R.id.image);
-
-        title.setText(shotsList.get(position).title);
-        playerName.setText(shotsList.get(position).playerName);
-        likesCount.setText(Integer.toString(shotsList.get(position).likesCount));
+        holder.title.setText(shotsList.get(position).title);
+        holder.playerName.setText(shotsList.get(position).playerName);
+        holder.likesCount.setText(Integer.toString(shotsList.get(position).likesCount));
 
         ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-        image.setImageUrl(shotsList.get(position).imageTeaserUrl, imageLoader);
+        holder.image.setImageUrl(shotsList.get(position).imageTeaserUrl, imageLoader);
 
         return view;
     }
