@@ -38,7 +38,7 @@ public class ShotsListAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
+    public Shots getItem(int position) {
         return shotsList.get(position);
     }
 
