@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import java.util.ArrayList;
@@ -41,9 +42,6 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
         Log.i(TAG, "newInstance");
         Log.i(TAG, "category = " + category);
 
-        JsonObjectRequest jsonObjReq = MyRequest.MyJsonObjectRequest(category, 1);
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
-
         ShotsListFragment fragment = new ShotsListFragment();
         Bundle args = new Bundle();
         args.putString("category", category);
@@ -68,7 +66,23 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
 
         mCategory = getCategory();
         mAdapter = new ShotsListAdapter(getActivity(), Shots.getCategoryList(mCategory, mCount));
-        setListAdapter(mAdapter);
+
+        JsonObjectRequest jsonObjReq = MyRequest.MyJsonObjectRequest(mCategory, 1
+                , new MyRequest.SuccessListener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        mAdapter.add(Shots.getCategoryList(mCategory, mCount));
+                        setListAdapter(mAdapter);
+                    }
+                }
+                , new MyRequest.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
     @Override
@@ -152,17 +166,27 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
             return;
         }
         mCount++;
-        JsonObjectRequest jsonObjReq = MyRequest.MyJsonObjectRequest(mCategory, mCount);
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
+        JsonObjectRequest jsonObjReq = MyRequest.MyJsonObjectRequest(mCategory, mCount
+                , new MyRequest.SuccessListener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        addListData();
+                        // OnActivityCreatedが完了する前にonScrollが呼ばれ、mAdapterがnullの場合がある
+                        if (mAdapter != null) {
+                            mAdapter.add(Shots.getCategoryList(mCategory, mCount));
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+                , new MyRequest.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-        addListData();
-        // OnActivityCreatedが完了する前にonScrollが呼ばれ、mAdapterがnullの場合がある
-        if (mAdapter != null) {
-            mAdapter.add(Shots.getCategoryList(mCategory, mCount));
-            mAdapter.notifyDataSetChanged();
-        }
+                    }
+                }
+        );
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
 
 //        getMyListView().invalidateViews();
     }
-
 }
