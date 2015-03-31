@@ -1,14 +1,15 @@
 package com.eure.traveling;
 
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,6 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
         Log.i(TAG, "newInstance");
         Log.i(TAG, "category = " + category);
 
-        JsonObjectRequest jsonObjReq = MyRequest.MyJsonObjectRequest(category, 1);
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
-
         ShotsListFragment fragment = new ShotsListFragment();
         Bundle args = new Bundle();
         args.putString("category", category);
@@ -69,6 +67,20 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
         mCategory = getCategory();
         mAdapter = new ShotsListAdapter(getActivity(), Shots.getCategoryList(mCategory, mCount));
         setListAdapter(mAdapter);
+
+        JsonObjectRequest jsonObjReq = MyRequest.getInstance()
+                .MyJsonObjectRequest(getCategory(), 1, new RequestListener.SuccessListener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        mAdapter.add(Shots.getCategoryList(mCategory, mCount));
+                    }
+                }, new RequestListener.FailureListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 通信失敗時に何か表示したい場合などは処理を追加する
+                    }
+                });
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
     @Override
@@ -157,17 +169,20 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
             return;
         }
         mCount++;
-        JsonObjectRequest jsonObjReq = MyRequest.MyJsonObjectRequest(mCategory, mCount);
+        JsonObjectRequest jsonObjReq = MyRequest.getInstance()
+                .MyJsonObjectRequest(mCategory, mCount, new RequestListener.SuccessListener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        addListData();
+                        mAdapter.add(Shots.getCategoryList(mCategory, mCount));
+                    }
+                }, new RequestListener.FailureListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 通信失敗時に何か表示したい場合などは処理を追加する
+                    }
+                });
         AppController.getInstance().addToRequestQueue(jsonObjReq);
-
-        addListData();
-        // OnActivityCreatedが完了する前にonScrollが呼ばれ、mAdapterがnullの場合がある
-        if (mAdapter != null) {
-            mAdapter.add(Shots.getCategoryList(mCategory, mCount));
-            mAdapter.notifyDataSetChanged();
-        }
-
-//        getMyListView().invalidateViews();
     }
 
 }

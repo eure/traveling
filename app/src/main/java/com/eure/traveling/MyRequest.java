@@ -14,20 +14,33 @@ public class MyRequest {
 
     public static final String TAG = MyRequest.class.getSimpleName();
 
+    private static MyRequest sInstance;
 
-    public static JsonObjectRequest MyJsonObjectRequest(final String category, int page) {
-        return new JsonObjectRequest(Request.Method.GET, "http://api.dribbble.com/shots/" + category + "?page=" + page,
+    public static MyRequest getInstance(){
+        if (sInstance == null) {
+            sInstance = new MyRequest();
+        }
+        return sInstance;
+    }
+
+    public JsonObjectRequest MyJsonObjectRequest(final String category, int page,
+            final RequestListener.SuccessListener successListener,
+            final RequestListener.FailureListener failureListener) {
+        return new JsonObjectRequest(Request.Method.GET,
+                "http://api.dribbble.com/shots/" + category + "?page=" + page,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         ShotsParser.parseShotsList(response, category);
+                        successListener.onResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d(TAG, "Error: " + error.getMessage());
+                        failureListener.onErrorResponse(error);
                     }
                 }
         );
