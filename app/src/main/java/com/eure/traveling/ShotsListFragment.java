@@ -88,6 +88,11 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        // コンテンツが追加される前に呼ばれることもある
+        if(mAdapter == null){
+            return;
+        }
+
         // 最後尾までスクロールした場合
         if (totalItemCount == firstVisibleItem + visibleItemCount) {
             Log.i(TAG, "onScroll");
