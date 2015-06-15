@@ -1,19 +1,10 @@
-buildscript {
-    repositories {
-        maven { url 'http://download.crashlytics.com/maven' }
-    }
-
-    dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
-    }
-}
-apply plugin: 'android'
-apply plugin: 'crashlytics'
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 repositories {
-    maven { url 'http://download.crashlytics.com/maven' }
+    jcenter()
+    maven { url 'https://maven.fabric.io/public' }
 }
-
 
 android {
     compileSdkVersion 14
@@ -37,6 +28,8 @@ dependencies {
     compile 'com.android.support:support-v13:19.+'
     compile 'com.android.support:support-v4:19.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':libraries:volley')
-    compile 'com.crashlytics.android:crashlytics:1.+'
+    compile 'com.mcxiaoke.volley:library:1.0.+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
+        transitive = true
+    }
 }
