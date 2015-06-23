@@ -89,7 +89,7 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
         Log.i(TAG, "position = " + position);
         Log.i(TAG, "id = " + id);
         super.onListItemClick(l, v, position, id);
-        DetailDialogFragment detailDialogFragment = DetailDialogFragment.newInstance(mList.get(position).imageUrl);
+        DetailDialogFragment detailDialogFragment = DetailDialogFragment.newInstance(mAdapter.getItem(position).getImageUrl());
         detailDialogFragment.show(getFragmentManager(), TAG);
     }
 
