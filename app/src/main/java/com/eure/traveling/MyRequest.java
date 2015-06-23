@@ -1,8 +1,6 @@
 package com.eure.traveling;
 
 
-
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -16,7 +14,7 @@ public class MyRequest {
 
     private static MyRequest sInstance;
 
-    public static MyRequest getInstance(){
+    public static MyRequest getInstance() {
         if (sInstance == null) {
             sInstance = new MyRequest();
         }
@@ -26,7 +24,7 @@ public class MyRequest {
     public JsonObjectRequest MyJsonObjectRequest(final String category, int page,
             final RequestListener.SuccessListener successListener,
             final RequestListener.FailureListener failureListener) {
-        return new JsonObjectRequest(Request.Method.GET,
+        return new JsonObjectRequest(
                 "http://api.dribbble.com/shots/" + category + "?page=" + page,
                 null,
                 new Response.Listener<JSONObject>() {

@@ -14,6 +14,8 @@ import com.crashlytics.android.Crashlytics;
 
 import java.util.Locale;
 
+import io.fabric.sdk.android.Fabric;
+
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -26,7 +28,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        Fabric.with(getApplicationContext(), new Crashlytics());
 
         setContentView(R.layout.activity_main);
 
