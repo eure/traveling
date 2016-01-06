@@ -48,3 +48,6 @@ _sandbox
 # Crashlytics files
 crashlytics-build.properties
 com_crashlytics_export_strings.xml
+
+# Secrets keys
+secrets.properties

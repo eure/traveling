@@ -15,3 +15,9 @@ allprojects {
         jcenter()
     }
 }
+
+def getDribbbleAccessToken(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['DRIBBBLE_ACCESS_TOKEN']
+}
