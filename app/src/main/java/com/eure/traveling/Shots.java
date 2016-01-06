@@ -30,8 +30,8 @@ public class Shots extends Model {
     @Column(name = "Image_Teaser_Url")
     public String imageTeaserUrl;
 
-    @Column(name = "Player_Name")
-    public String playerName;
+    @Column(name = "User_Name")
+    public String userName;
 
     @Column(name = "Likes_Count")
     public int likesCount;
@@ -76,12 +76,12 @@ public class Shots extends Model {
         this.imageTeaserUrl = imageTeaserUrl;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getUserrName() {
+        return userName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public void setUserName(String playerName) {
+        this.userName = playerName;
     }
 
     public int getLikesCount() {

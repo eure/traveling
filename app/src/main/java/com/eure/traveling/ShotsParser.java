@@ -14,12 +14,14 @@ public class ShotsParser {
     public static final String KEY_SHOTS                    = "shots";
     public static final String KEY_SHOTS_ID                 = "id";
     public static final String KEY_SHOTS_TITLE              = "title";
-    public static final String KEY_SHOTS_IMAGE_URL          = "image_url";
-    public static final String KEY_SHOTS_IMAGE_TEASER_URL   = "image_teaser_url";
     public static final String KEY_SHOTS_LIKES_COUNT        = "likes_count";
 
-    public static final String KEY_PLAYER       = "player";
-    public static final String KEY_PLAYER_NAME  = "name";
+    public static final String KEY_IMAGES = "images";
+    public static final String kEY_IMAGES_NORMAL = "normal";
+    public static final String KEY_IMAGES_TEASER = "teaser";
+
+    public static final String KEY_USER       = "user";
+    public static final String KEY_USER_NAME  = "name";
 
     public static List<Shots> parseShotsList(JSONObject jsonObject, String category) {
         return parseShotsList(jsonObject.optJSONArray(KEY_SHOTS), category);
@@ -45,18 +47,23 @@ public class ShotsParser {
         shots.setCategory(category);
         shots.setShotsId(jsonObject.optInt(KEY_SHOTS_ID));
         shots.setTitle(jsonObject.optString(KEY_SHOTS_TITLE));
-        shots.setImageUrl(jsonObject.optString(KEY_SHOTS_IMAGE_URL));
-        shots.setImageTeaserUrl(jsonObject.optString(KEY_SHOTS_IMAGE_TEASER_URL));
         shots.setLikesCount(jsonObject.optInt(KEY_SHOTS_LIKES_COUNT));
 
-        shots.setPlayerName(parsePlayer(jsonObject).optString(KEY_PLAYER_NAME));
+        shots.setImageUrl(parseImages(jsonObject).optString(kEY_IMAGES_NORMAL));
+        shots.setImageTeaserUrl(parseImages(jsonObject).optString(KEY_IMAGES_TEASER));
+
+        shots.setUserName(parseUser(jsonObject).optString(KEY_USER_NAME));
         shots.save();
 
         return shots;
     }
 
-    public static JSONObject parsePlayer(JSONObject jsonObject) {
-        return jsonObject.optJSONObject(KEY_PLAYER);
+    public static JSONObject parseImages(JSONObject jsonObject){
+        return jsonObject.optJSONObject(KEY_IMAGES);
+    }
+
+    public static JSONObject parseUser(JSONObject jsonObject) {
+        return jsonObject.optJSONObject(KEY_USER);
     }
 
 }

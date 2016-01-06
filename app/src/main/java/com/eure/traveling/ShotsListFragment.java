@@ -2,7 +2,7 @@ package com.eure.traveling;
 
 
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -68,8 +68,8 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
         mAdapter = new ShotsListAdapter(getActivity(), Shots.getCategoryList(mCategory, mCount));
         setListAdapter(mAdapter);
 
-        JsonObjectRequest jsonObjReq = MyRequest.getInstance()
-                .MyJsonObjectRequest(getCategory(), 1, new RequestListener.SuccessListener() {
+        JsonArrayRequest jsonArrayRequest = MyRequest.getInstance()
+                .MyJsonArrayRequest(getCategory(), 1, new RequestListener.SuccessListener() {
                     @Override
                     public void onResponse(Object response) {
                         mAdapter.add(Shots.getCategoryList(mCategory, mCount));
@@ -80,7 +80,7 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
                         // 通信失敗時に何か表示したい場合などは処理を追加する
                     }
                 });
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
+        AppController.getInstance().addToRequestQueue(jsonArrayRequest);
     }
 
     @Override
@@ -169,8 +169,8 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
             return;
         }
         mCount++;
-        JsonObjectRequest jsonObjReq = MyRequest.getInstance()
-                .MyJsonObjectRequest(mCategory, mCount, new RequestListener.SuccessListener() {
+        JsonArrayRequest jsonArrayRequest = MyRequest.getInstance()
+                .MyJsonArrayRequest(mCategory, mCount, new RequestListener.SuccessListener() {
                     @Override
                     public void onResponse(Object response) {
                         addListData();
@@ -182,7 +182,7 @@ public class ShotsListFragment extends ListFragment implements AbsListView.OnScr
                         // 通信失敗時に何か表示したい場合などは処理を追加する
                     }
                 });
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
+        AppController.getInstance().addToRequestQueue(jsonArrayRequest);
     }
 
 }
