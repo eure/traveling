@@ -53,7 +53,7 @@ public class ShotsListAdapter extends BaseAdapter{
         NetworkImageView image = (NetworkImageView)view.findViewById(R.id.image);
 
         title.setText(shotsList.get(position).title);
-        playerName.setText(shotsList.get(position).playerName);
+        playerName.setText(shotsList.get(position).userName);
         likesCount.setText(Integer.toString(shotsList.get(position).likesCount));
 
         ImageLoader imageLoader = AppController.getInstance().getImageLoader();
