@@ -25,7 +25,7 @@ public class MyRequest {
             final RequestListener.SuccessListener successListener,
             final RequestListener.FailureListener failureListener) {
         return new JsonObjectRequest(
-                "http://api.dribbble.com/shots/" + category + "?page=" + page,
+                "http://api.dribbble.com/shots/" + "?access_token=" + BuildConfig.DRIBBBLE_ACCESS_TOKEN + "&" + category + "?page=" + page,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
