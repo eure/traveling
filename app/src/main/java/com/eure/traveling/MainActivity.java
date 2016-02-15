@@ -9,12 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-
-import com.crashlytics.android.Crashlytics;
-
 import java.util.Locale;
-
-import io.fabric.sdk.android.Fabric;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -28,7 +23,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(getApplicationContext(), new Crashlytics());
 
         setContentView(R.layout.activity_main);
 
