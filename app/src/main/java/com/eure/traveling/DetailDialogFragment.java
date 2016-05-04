@@ -1,14 +1,13 @@
 package com.eure.traveling;
 
+import com.squareup.picasso.Picasso;
+
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-
+import android.widget.ImageView;
 
 public class DetailDialogFragment extends DialogFragment {
 
@@ -23,15 +22,8 @@ public class DetailDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.detail, container, false);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            String imgUrl = arguments.getString("url");
-            if (imgUrl != null) {
-                NetworkImageView networkImageView = (NetworkImageView) v.findViewById(R.id.image);
-                ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-                networkImageView.setImageUrl(imgUrl, imageLoader);
-            }
-        }
+
+        Picasso.with(getContext()).load(getArguments().getString("url")).into((ImageView) v.findViewById(R.id.image));
         return v;
     }
 

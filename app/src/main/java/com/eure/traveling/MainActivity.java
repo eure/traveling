@@ -1,6 +1,8 @@
 package com.eure.traveling;
 
 
+import com.eure.traveling.entity.Type;
+
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,8 +10,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import java.util.Locale;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -71,22 +71,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public Fragment getItem(int position) {
-            Log.i(TAG, "getItem");
-            Log.i(TAG, "position = " + position);
-            ShotsListFragment shotsListFragment;
-            switch (position) {
-                case 0:
-                    shotsListFragment = ShotsListFragment.newInstance("everyone");
-                    return shotsListFragment;
-                case 1:
-                    shotsListFragment = ShotsListFragment.newInstance("debuts");
-                    return shotsListFragment;
-                case 2:
-                    shotsListFragment = ShotsListFragment.newInstance("popular");
-                    return shotsListFragment;
-                default:
-                    return null;
-            }
+            return ShotListFragment.newInstance(Type.valueOf(position).name().toLowerCase());
         }
 
         /**
@@ -94,8 +79,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
          */
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 6 total pages.
+            return Type.values().length;
         }
 
         /**
@@ -103,16 +88,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
+            return Type.valueOf(position).name();
         }
     }
 

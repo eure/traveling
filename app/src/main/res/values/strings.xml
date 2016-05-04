@@ -2,9 +2,6 @@
 <resources>
 
     <string name="app_name">traveling</string>
-    <string name="title_section1">everyone</string>
-    <string name="title_section2">debuts</string>
-    <string name="title_section3">popular</string>
     <string name="action_settings">Settings</string>
     <string name="key_shots_id">id</string>
     <string name="key_title">title</string>
