@@ -96,10 +96,6 @@ public class ShotListFragment extends ListFragment implements AbsListView.OnScro
 
         // 最後尾までスクロールした場合
         if (totalItemCount == firstVisibleItem + visibleItemCount) {
-            Log.i(TAG, "onScroll");
-            Log.i(TAG, "firstViewItem = " + firstVisibleItem);
-            Log.i(TAG, "visibleItemCount = " + visibleItemCount);
-            Log.i(TAG, "totalItemCount = " + totalItemCount);
             additionalReading();
         }
     }
@@ -141,7 +137,6 @@ public class ShotListFragment extends ListFragment implements AbsListView.OnScro
         } else {
             mAdapter.add(shots);
         }
-        mCount++;
     }
 
     private void additionalReading() {
@@ -161,7 +156,7 @@ public class ShotListFragment extends ListFragment implements AbsListView.OnScro
                 public void onFailure(Call<List<Shot>> call, Throwable t) {
 
                 }
-            }, mType, mCount);
+            }, getType(), mCount);
         } catch (IOException e) {
             e.printStackTrace();
         }
