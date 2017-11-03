@@ -26,7 +26,8 @@ proguard/
 
 # Intellij/AndroidStudio project files, because
 # the project can be imported from settings.gradle
-.idea
+.idea/*
+!.idea/codeStyleSettings.xml
 *.iml
 
 # Old-style IDEA project files
