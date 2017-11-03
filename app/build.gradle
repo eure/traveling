@@ -13,7 +13,7 @@ android {
         targetSdkVersion 14
         versionCode 1
         versionName "1.0"
-        buildConfigField("String", "DRIBBBLE_ACCESS_TOKEN", "\""+getDribbbleAccessToken()+"\"")
+        buildConfigField("String", "DRIBBBLE_CLIENT_ACCESS_TOKEN", "\""+getDribbbleAccessToken()+"\"")
     }
     buildTypes {
         release {

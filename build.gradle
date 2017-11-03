@@ -17,5 +17,5 @@ allprojects {
 def getDribbbleAccessToken(){
     def Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
-    return props['DRIBBBLE_ACCESS_TOKEN']
+    return props['DRIBBBLE_CLIENT_ACCESS_TOKEN']
 }

@@ -16,7 +16,7 @@ public final class DribbbleService {
     public static final String API_URL = "https://api.dribbble.com/v1/";
 
     public interface Dribbble {
-        @GET("shots/?access_token=" + BuildConfig.DRIBBBLE_ACCESS_TOKEN)
+        @GET("shots/?access_token=" + BuildConfig.DRIBBBLE_CLIENT_ACCESS_TOKEN)
         Call<List<Shot>> shots(@Query("list") String type, @Query("page") int page);
     }
 
