@@ -1,5 +1,7 @@
 # traveling
 
+> Note: This repository is no longer being maintained.
+
 ## Description
 
 `traveling` is [dribbble](https://dribbble.com) viewer app
